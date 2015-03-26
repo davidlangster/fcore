@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <!-- JNDI -->
+  <!-- bean id="jmsJNDI" class="org.springframework.jndi.JndiTemplate">
+    <property name="environment">
+      <props>
+        <prop key="java.naming.factory.initial">org.apache.activemq.jndi.ActiveMQInitialContextFactory</prop>
+        <prop key="java.naming.provider.url">failover://(tcp://localhost:61616)</prop>
+        <prop key="connectionFactoryNames">jmsFactory</prop>
+        <prop key="topic.T_SYNC">T_SYNC</prop>
+      </props>
+    </property>
+  </bean-->
+  <!-- Connection Factory (JNDI) -->
+  <!-- bean id="jmsCF" class="org.springframework.jndi.JndiObjectFactoryBean">
+    <property name="jndiName" value="jmsFactory"/>
+    <property name="jndiTemplate" ref="jmsJNDI"/>
+  </bean -->
+  <!-- Destination (JNDI) -->
+  <!-- bean id="jmsDestination" class="org.springframework.jndi.JndiObjectFactoryBean">
+    <property name="jndiName" value="T_SYNC"/>
+    <property name="jndiTemplate" ref="jmsJNDI"/>
+  </bean -->
+
+  <!-- Connection factory -->
+  <bean id="jmsFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">
+    <property name="connectionFactory">
+      <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL">
+          <value>failover:tcp://localhost:61616</value>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <!-- Destination -->
+  <bean id="jmsDestination" class="org.apache.activemq.command.ActiveMQQueue" autowire="constructor">
+    <constructor-arg value="Q_SYNC"/>
+  </bean>
+
+  <!-- Resolver -->
+  <bean id="jmsResolver" class="org.springframework.jms.support.destination.JndiDestinationResolver">
+    <property name="fallbackToDynamicDestination" value="false"/>
+  </bean>
+  
+  <!-- JmsTemplate-->
+  <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+    <property name="deliveryMode" value="2"/>                 <!-- persistent-->
+    <property name="sessionAcknowledgeMode" value="1"/>       <!-- auto -->
+    <property name="defaultDestination" ref="jmsDestination"/>
+    <property name="destinationResolver" ref="jmsResolver"/>
+    <property name="connectionFactory">
+      <bean class="org.springframework.jms.connection.SingleConnectionFactory">
+        <property name="targetConnectionFactory" ref="jmsFactory"/>
+      </bean>
+    </property>
+  </bean>
+  
+  <!-- Producer -->
+  <bean id="jmsProducer" class="com.funkdefino.common.message.Producer">
+    <property name="template" ref="jmsTemplate"/>
+  </bean>
+
+  <!-- Consumer -->
+  <!--bean id="jmsConsumer" class="com.funkdefino.common.message.Consumer"/>
+  <bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    <property name="connectionFactory" ref="jmsFactory"/>
+    <property name="destination" ref="jmsDestination"/>
+    <property name="messageListener" ref="jmsConsumer"/>
+  </bean-->
+
+</beans>

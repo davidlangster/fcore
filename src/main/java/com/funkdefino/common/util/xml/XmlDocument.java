@@ -31,7 +31,7 @@ public final class XmlDocument implements ISerializable, Cloneable {
     //** ------------------------------------------------- Static initialisation
 
     public  final static long   serialVersionUID = -8644688210575346817L;
-    private final static String DEFAULT_PREFIX   = "_differitas_";
+    private final static String DEFAULT_PREFIX   = "_funkdefino_";
     private final static String s_sNoResource    = "Unable to load resource file '%s'";
 
     static {

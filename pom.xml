@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.funkdefino</groupId>
   <artifactId>fcore</artifactId>
@@ -7,8 +9,8 @@
   <name>Funkdefino core classes</name>
   <version>1.0</version>
   <properties>
-    <skipTests>false</skipTests>
- 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <skipTests>true</skipTests>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <version.java>1.6</version.java>
     <version.jdom>2.0.2</version.jdom>
     <version.junit>4.8.1</version.junit>
@@ -18,11 +20,6 @@
     <version.logback>1.0.9</version.logback>
     <output.directory>${project.build.directory}/lib</output.directory>
   </properties>
-  <!--profiles>
-    <profile>
-      <id>default</id>
-    </profile>
-  </profiles-->
   <dependencies>
     <dependency>
       <groupId>org.jdom</groupId>
@@ -34,15 +31,10 @@
       <artifactId>jaxen</artifactId>
       <version>full</version>
     </dependency>
-    <!--dependency>
-      <groupId>saxpath</groupId>
-      <artifactId>saxpath</artifactId>
-      <version>1.0-FCS</version>
-    </dependency-->
     <dependency>
-    	<groupId>org.slf4j</groupId>
-    	<artifactId>slf4j-api</artifactId>
-    	<version>${version.slf4j}</version>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${version.slf4j}</version>
     </dependency>
     <dependency>
        <groupId>ch.qos.logback</groupId>
@@ -73,30 +65,18 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${version.junit}</version>
-      <scope>test</scope>
+      <scope>compile</scope>
     </dependency>
     <dependency>
-    	<groupId>org.apache.activemq</groupId>
-    	<artifactId>activemq-core</artifactId>
-    	<version>${version.activemq}</version>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-core</artifactId>
+      <version>${version.activemq}</version>
     </dependency>
     <dependency>
-    	<groupId>org.apache.activemq</groupId>
-    	<artifactId>activemq-pool</artifactId>
-    	<version>${version.activemq}</version>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-pool</artifactId>
+      <version>${version.activemq}</version>
     </dependency>
-    <!--dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.4</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>oracle</groupId>
-      <artifactId>ojdbc</artifactId>
-      <version>16</version>
-      <scope>test</scope>
-    </dependency-->
   </dependencies>
   <build>
     <plugins>
@@ -108,7 +88,7 @@
           <source>${version.java}</source>
           <target>${version.java}</target>
           <fork>true</fork>
-          <executable>${env.JAVA_HOME}/bin/javac.exe</executable>
+          <!--executable>${JAVA_HOME}/bin/javac.exe</executable-->
         </configuration>
       </plugin>
       <plugin>
